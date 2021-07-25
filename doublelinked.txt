@@ -1,0 +1,127 @@
+//Print element at position i in linked list
+void print_element_idx(int idx){
+    if(head == NULL){
+        cout<< "Empty List!!!"<<endl;
+    }
+
+    if(idx == 0){
+        cout<<head->data<<endl;
+    }
+    else{
+        node* curr = head;
+        int i = 0;
+        while(i<idx){
+            curr = curr->next;
+            i+=1;
+        }
+        cout<<curr->data<<endl;
+    }
+}
+
+//Get node at position i in linked list
+node* get_element_idx(int idx){
+    if(head == NULL){
+        return NULL;
+    }
+
+    if(idx == 0){
+        return head;
+    }
+    else{
+        node* curr = head;
+        int i = 0;
+        while(i < idx){
+            curr = curr->next;
+            i+=1;
+        }
+        return curr;
+    }
+}
+
+//Count number of nodes in list by iterative/recursive way
+int count_nodes(){
+    if(head == NULL){
+        return 0;
+    }
+
+    node* curr = head;
+
+    int nodes = 0;
+
+    while(curr != NULL){
+        curr = curr->next;
+        nodes++;
+    }
+    return nodes;
+}
+
+//Find length of loop in linked list
+int countNodes(struct node *n)
+{
+    int res = 1;
+    struct node *temp = n;
+    while (temp->next != n)
+    {
+        res++;
+        temp = temp->next;
+    }
+    return res;
+}
+
+int countNodesinLoop(struct node *list)
+{
+    struct node *slow_p = list, *fast_p = list;
+
+    while (slow_p && fast_p && fast_p->next)
+    {
+        slow_p = slow_p->next;
+        fast_p = fast_p->next->next;
+
+        if (slow_p == fast_p)
+            return countNodes(slow_p);
+    }
+
+    return 0;
+}
+
+//Remove duplication of nodes in unsorted linked list
+void remove_duplicates(){
+
+    node* curr_top = head;
+    while(curr_top->next != NULL){
+        node* curr = head;
+        node* prev = NULL;
+        bool found = false;
+        while(curr != NULL){
+            if(curr->data == curr_top->data){
+                if(found == true){
+                    if(curr->next == NULL){
+                        delete_end();
+                    }
+                    else{
+                        delete_node(prev);
+                    }
+                    curr = prev->next;
+                    continue;
+                }
+                else{
+                    found = true;
+                }
+            }
+            prev = curr;
+            curr = curr->next;
+        }
+        curr_top = curr_top->next;
+    }
+}
+
+//Swap two nodes in linked list by index
+void swap_nodes_idx(int i , int j){
+    int total = count_nodes();
+    if( i < 0 || j < 0 || i >= total || j >= total){
+        return;
+    }
+    int temp = get_element_idx(i)->data;
+    get_element_idx(i)->data = get_element_idx(j)->data;
+    get_element_idx(j)->data = temp;
+}
